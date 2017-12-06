@@ -1,0 +1,39 @@
+image: node:4
+
+stages:
+    # To include tests in next release
+    # - test
+    - package
+    - notify
+
+test:
+    tags:
+        - docker-executor
+    stage: test
+    script:
+        - npm install
+        - npm test
+
+package:
+    tags:
+        - docker-executor
+    stage: package
+    only:
+        - /^release-.*/
+        - /^hf-.*/
+        - triggers
+    script:
+        - npm run package -- --no-deps
+    artifacts:
+        name: ${CI_PROJECT_NAME}-${CI_BUILD_REF}
+        paths:
+            - dist/
+            - doc/
+notify:
+    tags:
+        - docker-executor
+    stage: notify
+    except:
+        - master
+    script:
+        - ./build/notifyProjects.sh
