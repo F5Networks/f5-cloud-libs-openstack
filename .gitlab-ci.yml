@@ -6,13 +6,13 @@ stages:
     - package
     - notify
 
-test:
-    tags:
-        - docker-executor
-    stage: test
-    script:
-        - npm install
-        - npm test
+# test:
+#     tags:
+#         - docker-executor
+#     stage: test
+#     script:
+#         - npm install
+#         - npm test
 
 package:
     tags:
