@@ -10,6 +10,8 @@ stages:
 #     tags:
 #         - docker-executor
 #     stage: test
+#     except:
+#         - triggers
 #     script:
 #         - npm install
 #         - npm test
@@ -21,7 +23,6 @@ package:
     only:
         - /^release-.*/
         - /^hf-.*/
-        - triggers
     script:
         - npm run package -- --no-deps
     artifacts:
@@ -29,6 +30,7 @@ package:
         paths:
             - dist/
             - doc/
+
 notify:
     tags:
         - docker-executor
@@ -36,4 +38,9 @@ notify:
     except:
         - master
     script:
-        - ./build/notifyProjects.sh
+        - if [[ "$AUTO_NOTIFY" == true ]]; then
+        -     echo 'Running notifyProjects.sh'
+        -     ./build/notifyProjects.sh
+        - else
+        -     echo AUTO_NOTIFY is off, skipping notification.
+        - fi
