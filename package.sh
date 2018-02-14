@@ -4,4 +4,4 @@ if [[ $1 == '--no-deps' ]]; then
     npm install --production
 fi
 
-tar -C .. --exclude=".git*" --exclude="test" --exclude="${PWD##*/}/dist" --exclude="doc" --exclude="${PWD##*/}/.vscode" -zcvf dist/f5-cloud-libs-openstack.tar.gz f5-cloud-libs-openstack
+tar -C .. --exclude=".git*" --exclude="test" --exclude="${PWD##*/}/dist" --exclude="doc" --exclude="${PWD##*/}/.vscode" -zcf dist/f5-cloud-libs-openstack.tar.gz f5-cloud-libs-openstack
